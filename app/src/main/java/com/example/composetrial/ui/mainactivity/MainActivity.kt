@@ -1,4 +1,4 @@
-package com.example.composetrial
+package com.example.composetrial.ui.mainactivity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,14 +14,14 @@ import com.example.composetrial.ui.theme.ComposeTrialTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    val mainActivityViewModel: MainActivityViewModel by viewModels{}
+    val mainActivityViewModel: MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTrialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    lifecycleScope.launch {  }
+                    lifecycleScope.launch { }
                     Greeting("Android")
                 }
             }

@@ -25,7 +25,7 @@ private const val TIME_OUT = 60_000
  * https://github.com/Kotlin/kotlinx.serialization
  * https://medium.com/google-developer-experts/how-to-use-ktor-client-on-android-dcdeddc066b9
  * */
-private val ktorHttpClient = HttpClient(Android) {
+fun ktorHttpClient() = HttpClient(Android) {
     install(JsonFeature) {
         serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
             prettyPrint = true

@@ -3,6 +3,7 @@
     package="com.example.composetrial">
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposeTrial">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.mainactivity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeTrial.NoActionBar">
