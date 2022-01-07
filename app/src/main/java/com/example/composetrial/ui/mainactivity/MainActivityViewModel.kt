@@ -1,14 +1,30 @@
 package com.example.composetrial.ui.mainactivity
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
-import com.example.composetrial.data.response.Movies
-import com.example.composetrial.repository.MoviesRepository
+import com.example.composetrial.ui.base.BaseViewModel
+import com.example.composetrial.ui.mainactivity.utils.MoviesFetchEvent
+import com.example.composetrial.ui.mainactivity.utils.MoviesFetchUIState
+import com.example.composetrial.usecases.MoviesFetchUseCase
+import com.example.composetrial.utils.DomainWrapper
 
-class MainActivityViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
 
-    suspend fun getMovies(): Movies {
+class MainActivityViewModel(private val moviesFetchUseCase: MoviesFetchUseCase) :
+    BaseViewModel<MoviesFetchEvent, MoviesFetchUIState>(MoviesFetchUIState()) {
+
+    private fun getMovies() {
         Log.i("Tag", "start")
-        return moviesRepository.getMovies()
+        executeTask {
+            when (val mapper = moviesFetchUseCase.getMovies()) {
+                is DomainWrapper.Success -> {
+                    postUiState(newUIState = uiState.value.copy(isLoading = false, data = mapper.data))
+                }
+            }
+        }
+    }
+
+    override fun postEvent(event: MoviesFetchEvent) {
+        if (event == MoviesFetchEvent.FetchMovies) {
+            getMovies()
+        }
     }
 }

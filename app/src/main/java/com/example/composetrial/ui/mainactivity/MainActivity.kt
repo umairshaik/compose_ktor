@@ -8,12 +8,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.composetrial.ui.mainactivity.utils.MoviesFetchEvent
 import com.example.composetrial.ui.theme.ComposeTrialTheme
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,7 +28,10 @@ class MainActivity : ComponentActivity() {
             ComposeTrialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-
+                    mainActivityViewModel.postEvent(MoviesFetchEvent.FetchMovies)
+                    val data by mainActivityViewModel.uiState.collectAsState()
+                    // val data = mainActivityViewModel.getMovies()
+                    Log.i("TAG_DATA", data.toString())
 
                 }
             }
@@ -34,8 +39,7 @@ class MainActivity : ComponentActivity() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                val data = mainActivityViewModel.getMovies()
-                Log.i("TAG", data.toString())
+
             }
             //Greeting(name = it.post.toString())
         }
